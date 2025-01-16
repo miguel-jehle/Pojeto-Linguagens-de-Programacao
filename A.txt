@@ -1,0 +1,21 @@
+main :: IO ()
+main = diffHa (leitura "A.txt") (leitura "B.txt") 1.0 0.0 
+
+distancia :: String -> String -> Float
+distancia [] [] = 0.0
+distancia (ha:ta) [] = 1.0 + distancia ta []
+distancia [] (hb:tb) = 1.0 + distancia [] tb
+distancia (ha:ta) (hb:tb)
+    |ha == hb = distancia ta tb
+    |ha /= hb = 1.0 + distancia ta tb
+
+compara :: String -> String -> Bool
+compara a b = (distancia a b / fromIntegral (length a) ) <= 0.6 {-Retorna TRUE se eh igual ou modificada e FALSE se eh realmente uma linha diferente-}
+
+procura :: String -> [String] -> Bool
+procura a [] = False
+procura a (h_b:t_b)
+    | a == h_b =  True
+    | otherwise = procura a t_b
+
+
